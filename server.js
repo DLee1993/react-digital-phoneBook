@@ -1,6 +1,9 @@
 const express = require("express"),
     app = express(),
-    PORT = process.env.PORT || 3000;
+    PORT = process.env.PORT || 3000,
+    connectDB = require("./config/db"); 
+
+connectDB(); 
 
 app.get("/", (req, res) => res.json({ msg: "Welcome to the Digital PhoneBook" }));
 
