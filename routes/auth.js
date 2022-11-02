@@ -1,3 +1,5 @@
+//! THESE ROUTES ARE TO AUTHENTICATE A USER WHEN THEY TRY TO LOG IN
+
 const express = require('express'); 
 
 const router = express.Router(); 

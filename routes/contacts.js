@@ -1,3 +1,5 @@
+//! THESE ROUTES ARE FOR THE USER TO ACCES THEIR CONTACTS LIST
+
 const express = require('express'); 
 
 const router = express.Router(); 

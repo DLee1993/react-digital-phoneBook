@@ -1,3 +1,5 @@
+//! THIS ROUTE IS TO INITALLY SIGN UP / ADD A NEW USER
+
 const express = require('express'); 
 
 const router = express.Router(); 
