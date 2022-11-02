@@ -1,0 +1,19 @@
+{
+  "name": "digital-phonebook",
+  "version": "1.0.0",
+  "description": "MERN application that allows you to store contact details",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DLee1993/react-digital-phoneBook.git"
+  },
+  "author": "David Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DLee1993/react-digital-phoneBook/issues"
+  },
+  "homepage": "https://github.com/DLee1993/react-digital-phoneBook#readme"
+}
