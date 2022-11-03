@@ -5,7 +5,6 @@ const { check, validationResult } = require("express-validator");
 const { genSalt, hash } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-
 const router = express.Router();
 
 //INFO - @route POST - /api/users
