@@ -7,13 +7,21 @@ const { check, validationResult } = require("express-validator");
 const { genSalt, hash, compare } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const auth = require('../middleware/auth'); 
+const { findById } = require("../models/User");
 
 //INFO - @route GET - /api/auth
 //INFO - @description Get logged in User
 //INFO - @access Private
 
-router.get("/", (req, res) => {
-    res.send("Get logged in user");
+router.get("/", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password')
+        res.json(user); 
+    } catch (error) {
+        console.error(error.msg)
+        res.status(500).send('server error')
+    }
 });
 
 //INFO - @route POST - /api/auth
