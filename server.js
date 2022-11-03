@@ -10,6 +10,9 @@ const express = require("express"),
 
 connectDB();
 
+//! initialise middleware
+app.use(express.json())
+
 app.get("/", (req, res) => res.json({ msg: "Welcome to the Digital PhoneBook" }));
 
 app.use("/api/users", require("./routes/users"));
