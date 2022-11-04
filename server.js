@@ -5,13 +5,13 @@
 
 const express = require("express"),
     app = express(),
-    PORT = process.env.PORT || 3000,
+    PORT = process.env.PORT || 5000,
     connectDB = require("./config/db");
 
 connectDB();
 
 //! initialise middleware
-app.use(express.json())
+app.use(express.json());
 
 app.get("/", (req, res) => res.json({ msg: "Welcome to the Digital PhoneBook" }));
 
