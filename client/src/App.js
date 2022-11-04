@@ -1,7 +1,24 @@
+import React, {Fragment} from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/layout/Navbar";
+import Home from './components/pages/Home';
+import About from './components/pages/About';
 import "./App.css";
 
 const App = () => {
-    return <div className='App'>MY app</div>;
+    return (
+        <Router>
+          <Fragment className='App'>
+            <Navbar />
+            <div className="container">
+              <Routes>
+                <Route exact path='/' element={<Home/>}></Route>
+                <Route exact path='/about' element={<About/>}></Route>
+              </Routes>
+            </div>
+        </Fragment>
+        </Router>
+    );
 };
 
 export default App;
