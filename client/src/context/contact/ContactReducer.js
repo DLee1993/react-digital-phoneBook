@@ -17,7 +17,7 @@ const stateSwitch = (state, action) => {
                 ...state,
                 contacts: state.contacts.map((contact) =>
                     contact.id === action.payload.id ? action.payload : contact
-                ) 
+                ),
             };
         case DELETE_CONTACT:
             return {
@@ -28,6 +28,18 @@ const stateSwitch = (state, action) => {
             return { ...state, current: action.payload };
         case CLEAR_CURRENT:
             return { ...state, current: null };
+        case FILTER_CONTACTS:
+            return {
+                ...state,
+                filtered: state.contacts.filter((contact) => {
+                    return (
+                        contact.name.toLowerCase().includes(action.payload) ||
+                        contact.email.toLowerCase().includes(action.payload)
+                    );
+                }),
+            };
+        case CLEAR_FILTER:
+            return { ...state, filtered: null };
         default:
             return state;
     }
