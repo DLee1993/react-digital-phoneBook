@@ -9,6 +9,9 @@ const express = require("express"),
 //! Connect the database to the project
 connectDB(); 
 
+//! Initialise middleware
+app.use(express.json()); 
+
 //! app.get - runs a function ( line 9 ) that gets invoked(used) whenever there is a get request to the specified path
 //! in this instance the path is /, which interprets to the website root page or 'home page'
 app.get("/", (req, res) => {
