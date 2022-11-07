@@ -2,7 +2,9 @@ const express = require("express"),
     router = express.Router(),
     User = require("../models/User"),
     { check, validationResult } = require("express-validator"),
-    { genSalt, hash } = require("bcryptjs");
+    { genSalt, hash } = require("bcryptjs"),
+    jwt = require("jsonwebtoken"),
+    config = require("config");
 
 //! send data to server | i.e. adding a new user
 //info - POST Request
@@ -48,8 +50,32 @@ router.post(
             user.password = await hash(password, salt);
             //info - Then we save the password to add it to the database
             await user.save();
-            //info - this is just a message to acknowledge that the user has been saved
-            res.send("user saved");
+            //info - The payload is needed to generate a jwt token when a user is registered
+            //info - In the payload we specify what we want to be within the token payload, in this case the user id
+            const payload = {
+                user: {
+                    id: user.id,
+                },
+            };
+            //info - The sign function generates the token
+            //info - A token is made up of three parts - 
+            //info - header(type of token and algorithym used) - 
+            //info - payload(user - user.id) - signature - 
+            //info - The signature takes all of the above plus the jwtSecret you created ( default.json ) 
+            jwt.sign(
+                payload,
+                config.get("jwtSecret"),
+                {
+                    //info - The expiresIn will expire the token in the selected time ( i.e. 36000 seconds )
+                    //info - After the token expires the user will need to sign in again to continue
+                    expiresIn: 36000,
+                },
+                //info error handling - The below will throw the error is there is one, if not it will respond with the token
+                (err, token) => {
+                    if (err) throw err;
+                    res.json({ token });
+                }
+            );
         } catch (error) {
             //info - the catch will log any error and show the error in a message
             console.error(error.message);
