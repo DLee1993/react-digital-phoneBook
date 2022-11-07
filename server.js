@@ -1,8 +1,13 @@
 //! load in express
 const express = require("express"),
     app = express(),
+    //info - load in the mongoose db file
+    connectDB = require('./config/db'); 
     //! PORT variable - used to store the port that will be used in project
     PORT = process.env.PORT || 5000;
+
+//! Connect the database to the project
+connectDB(); 
 
 //! app.get - runs a function ( line 9 ) that gets invoked(used) whenever there is a get request to the specified path
 //! in this instance the path is /, which interprets to the website root page or 'home page'
