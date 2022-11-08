@@ -2,17 +2,24 @@ const express = require("express"),
     router = express.Router(),
     User = require("../models/User"),
     { check, validationResult } = require("express-validator"),
-    { genSalt, hash, compare } = require("bcryptjs"),
+    { compare } = require("bcryptjs"),
     jwt = require("jsonwebtoken"),
-    config = require("config");
+    config = require("config"),
+    auth = require("../middleware/auth");
 
 //! Get the logged in user info to use, so we can fetch their contact list
 //info - GET Request
 //info - Route - /api/auth
 //info - description - This request ask for data from the server, this will allow us to find users and use their data
 //info - authorisation - Private - This will only be used if a user is logged in
-router.get("/", (req, res) => {
-    res.send("Get the logged in user");
+router.get("/", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+        res.json(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Server Error");
+    }
 });
 
 //! Authenticate the user and get jwt token
@@ -70,8 +77,8 @@ router.post(
                 }
             );
         } catch (error) {
-            console.error(error.message); 
-            res.status(500).send('Server error')
+            console.error(error.message);
+            res.status(500).send("Server error");
         }
     }
 );
