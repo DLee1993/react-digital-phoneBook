@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import ContactContext from "./ContactContext";
 import ContactReducer from "./ContactReducer";
 import {
-    ADD_CONTACT,
+    ADD_CONTACT, DELETE_CONTACT,
     // DELETE_CONTACT,
     // SET_CURRENT,
     // CLEAR_CURRENT,
@@ -54,6 +54,10 @@ const ContactState = (props) => {
     //info - update contact
 
     //info - delete contact 
+    //info - use the id from contact to identify which contact to delete
+    const deleteContact = (id) => {
+        dispatch({type: DELETE_CONTACT, payload: id})
+    }
 
     //! Additional operations for application
 
@@ -65,7 +69,7 @@ const ContactState = (props) => {
 
     return (
         //info - Add all functions here to be used
-        <ContactContext.Provider value={{ contacts: state.contacts, addContact }}>
+        <ContactContext.Provider value={{ contacts: state.contacts, addContact, deleteContact }}>
             {props.children}
         </ContactContext.Provider>
     );
