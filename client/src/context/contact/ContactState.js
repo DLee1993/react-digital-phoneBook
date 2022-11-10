@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import ContactContext from "./ContactContext";
 import ContactReducer from "./ContactReducer";
 import {
-    ADD_CONTACT, DELETE_CONTACT,
-    // DELETE_CONTACT,
-    // SET_CURRENT,
-    // CLEAR_CURRENT,
+    ADD_CONTACT,
+    DELETE_CONTACT,
+    SET_CURRENT,
+    CLEAR_CURRENT,
     // UPDATE_CONTACT,
     // FILTER_CONTACTS,
     // CLEAR_FILTER,
@@ -38,30 +38,37 @@ const ContactState = (props) => {
                 type: "professional",
             },
         ],
+        current: null,
     };
     const [state, dispatch] = useReducer(ContactReducer, initialState);
 
     //! CRUD Operations
 
-    //info - Add a new contact 
+    //info - Add a new contact
     const addContact = (contact) => {
-        contact.id = uuidv4(); 
-        dispatch({type: ADD_CONTACT, payload: contact})
-    }
+        contact.id = uuidv4();
+        dispatch({ type: ADD_CONTACT, payload: contact });
+    };
 
     //info - Set current contact
+    const setCurrent = (contact) => {
+        dispatch({ type: SET_CURRENT, payload: contact });
+    };
 
     //info - update contact
 
-    //info - delete contact 
+    //info - delete contact
     //info - use the id from contact to identify which contact to delete
     const deleteContact = (id) => {
-        dispatch({type: DELETE_CONTACT, payload: id})
-    }
+        dispatch({ type: DELETE_CONTACT, payload: id });
+    };
 
     //! Additional operations for application
 
-    //info - Clear contact
+    //info - Clear current contact
+    const clearCurrent = () => {
+        dispatch({ type: CLEAR_CURRENT });
+    };
 
     //info - Filter contacts
 
@@ -69,10 +76,19 @@ const ContactState = (props) => {
 
     return (
         //info - Add all functions here to be used
-        <ContactContext.Provider value={{ contacts: state.contacts, addContact, deleteContact }}>
+        <ContactContext.Provider
+            value={{
+                contacts: state.contacts,
+                current: state.current,
+                addContact,
+                deleteContact,
+                setCurrent,
+                clearCurrent,
+            }}
+        >
             {props.children}
         </ContactContext.Provider>
     );
 };
 
-export default ContactState; 
+export default ContactState;
