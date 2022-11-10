@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+//info - This is the navbar component, all the below code gets rendered to the page
 const Navbar = ({ title, icon }) => {
     return (
         <div className='navbar bg-primary'>
@@ -18,6 +19,7 @@ const Navbar = ({ title, icon }) => {
 
 export default Navbar;
 
+//info - the below proptypes ensure the value passed to the key (i.e. title) is the correct datatype (i.e. string)
 Navbar.propTypes = {
     title: PropTypes.string.isRequired,
     icon: PropTypes.string,

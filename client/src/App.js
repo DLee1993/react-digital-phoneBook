@@ -11,9 +11,11 @@ const App = () => {
         <ContactState>
             <Router>
                 <Fragment>
+                    {/* Once imported you add your component to the app to be rendered */}
                     <Navbar />
                     <div className='container'>
                         <Routes>
+                            {/* The below routes lead to a page */}
                             <Route exact path='/' element={<Home />}></Route>
                             <Route exact path='/about' element={<About />}></Route>
                         </Routes>

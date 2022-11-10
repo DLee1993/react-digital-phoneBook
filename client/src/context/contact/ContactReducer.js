@@ -8,6 +8,8 @@ import {
     // CLEAR_FILTER,
 } from "../Types";
 
+//info - This is where you decide what to do with the state and payload depending on the type of action 
+//info - i.e. addContact or updateContact
 const formAction = (state, action) => {
     switch (action.type) {
         case ADD_CONTACT:

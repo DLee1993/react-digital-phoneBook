@@ -2,6 +2,7 @@ import React from "react";
 // import ContactContext from "../../context/contact/ContactContext";
 import PropTypes from 'prop-types'
 
+//info - Contact item is used as a template of what each contact should look like when rendered
 const ContactItem = ({ contact }) => {
     const { name, email, phone, type } = contact;
     return (

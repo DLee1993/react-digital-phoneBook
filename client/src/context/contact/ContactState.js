@@ -12,6 +12,7 @@ import {
     // CLEAR_FILTER,
 } from "../Types";
 
+//info - this is the inital state of our app
 const ContactState = (props) => {
     const initialState = {
         contacts: [
@@ -63,6 +64,7 @@ const ContactState = (props) => {
     //info - clear filter
 
     return (
+        //info - Add all functions here to be used
         <ContactContext.Provider value={{ contacts: state.contacts, addContact }}>
             {props.children}
         </ContactContext.Provider>

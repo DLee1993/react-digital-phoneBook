@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import ContactContext from "../../context/contact/ContactContext";
 
+//info - Contact form is where we add add/update a contact
 const ContactForm = () => {
     const contactContext = useContext(ContactContext);
 
@@ -15,6 +16,7 @@ const ContactForm = () => {
 
     const onChange = (e) => setContact({ ...contact, [e.target.name]: e.target.value });
 
+    //info - on submit is where we call the relative function i.e. addContact ()
     const onSubmit = (e) => {
         e.preventDefault();
 
