@@ -7,6 +7,7 @@ import {
     DELETE_CONTACT,
     SET_CURRENT,
     CLEAR_CURRENT,
+    UPDATE_CONTACT,
     // UPDATE_CONTACT,
     // FILTER_CONTACTS,
     // CLEAR_FILTER,
@@ -56,6 +57,9 @@ const ContactState = (props) => {
     };
 
     //info - update contact
+    const updateContact = (contact) => {
+        dispatch({ type: UPDATE_CONTACT, payload: contact });
+    };
 
     //info - delete contact
     //info - use the id from contact to identify which contact to delete
@@ -84,6 +88,7 @@ const ContactState = (props) => {
                 deleteContact,
                 setCurrent,
                 clearCurrent,
+                updateContact
             }}
         >
             {props.children}

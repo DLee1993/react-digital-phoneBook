@@ -1,9 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ContactContext from "../../context/contact/ContactContext";
 
 //info - Contact form is where we add add/update a contact
 const ContactForm = () => {
     const contactContext = useContext(ContactContext);
+
+    const { addContact, current, clearCurrent, updateContact } = contactContext;
+
+    useEffect(() => {
+        if (current !== null) {
+            setContact(current);
+        } else {
+            setContact({
+                name: "",
+                email: "",
+                phone: "",
+                type: "personal",
+            });
+        }
+    }, [contactContext, current]);
 
     const [contact, setContact] = useState({
         name: "",
@@ -20,19 +35,21 @@ const ContactForm = () => {
     const onSubmit = (e) => {
         e.preventDefault();
 
-        contactContext.addContact(contact);
-
-        setContact({
-            name: "",
-            email: "",
-            phone: "",
-            type: "personal",
-        });
+        //info - if current is empty we need to add a new contact - if it is not empty we update the contact 
+        if (!current) {
+            addContact(contact);
+        } else {
+            updateContact(contact);
+        }
+        clearAll();
     };
+
+    //info - clearAll just empties the input fields of the form
+    const clearAll = () => clearCurrent();
 
     return (
         <form onSubmit={onSubmit}>
-            <h2 className='text-primary'>Add Contact</h2>
+            <h2 className='text-primary'>{current ? "Update Contact" : "Add Contact"}</h2>
             <input type='text' placeholder='Name' name='name' value={name} onChange={onChange} />
             <input
                 type='email'
@@ -61,8 +78,19 @@ const ContactForm = () => {
             />{" "}
             Professional
             <div>
-                <input type='submit' value='Add Contact' className='btn btn-primary btn-block' />
+                <input
+                    type='submit'
+                    value={current ? "Update Contact" : "Add Contact"}
+                    className='btn btn-primary btn-block'
+                />
             </div>
+            {current && (
+                <div>
+                    <button className='btn btn-light btn-block' onClick={clearAll}>
+                        Clear
+                    </button>
+                </div>
+            )}
         </form>
     );
 };
