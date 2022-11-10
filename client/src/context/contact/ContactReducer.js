@@ -1,15 +1,11 @@
 import {
     ADD_CONTACT,
     CLEAR_CURRENT,
+    CLEAR_FILTER,
     DELETE_CONTACT,
+    FILTER_CONTACTS,
     SET_CURRENT,
-    UPDATE_CONTACT,
-    // DELETE_CONTACT,
-    // SET_CURRENT,
-    // CLEAR_CURRENT,
-    // UPDATE_CONTACT,
-    // FILTER_CONTACTS,
-    // CLEAR_FILTER,
+    UPDATE_CONTACT
 } from "../Types";
 
 //info - This is where you decide what to do with the state and payload depending on the type of action
@@ -34,6 +30,19 @@ const formAction = (state, action) => {
             return { ...state, current: action.payload };
         case CLEAR_CURRENT:
             return { ...state, current: null };
+        case FILTER_CONTACTS:
+            return {
+                ...state,
+                filtered: state.contacts.filter((contact) => {
+                    return (
+                        contact.name.toLowerCase().includes(action.payload) ||
+                        contact.email.toLowerCase().includes(action.payload) ||
+                        contact.phone.toLowerCase().includes(action.payload)
+                    );
+                }),
+            };
+        case CLEAR_FILTER:
+            return { ...state, filtered: null };
         default:
             return state;
     }
