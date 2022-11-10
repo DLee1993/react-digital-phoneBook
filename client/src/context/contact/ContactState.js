@@ -4,12 +4,12 @@ import ContactContext from "./ContactContext";
 import ContactReducer from "./ContactReducer";
 import {
     ADD_CONTACT,
-    DELETE_CONTACT,
-    SET_CURRENT,
-    CLEAR_CURRENT,
-    UPDATE_CONTACT,
-    FILTER_CONTACTS,
-    CLEAR_FILTER,
+    // DELETE_CONTACT,
+    // SET_CURRENT,
+    // CLEAR_CURRENT,
+    // UPDATE_CONTACT,
+    // FILTER_CONTACTS,
+    // CLEAR_FILTER,
 } from "../Types";
 
 const ContactState = (props) => {
@@ -43,6 +43,10 @@ const ContactState = (props) => {
     //! CRUD Operations
 
     //info - Add a new contact 
+    const addContact = (contact) => {
+        contact.id = uuidv4(); 
+        dispatch({type: ADD_CONTACT, payload: contact})
+    }
 
     //info - Set current contact
 
@@ -59,7 +63,7 @@ const ContactState = (props) => {
     //info - clear filter
 
     return (
-        <ContactContext.Provider value={{ contacts: state.contacts }}>
+        <ContactContext.Provider value={{ contacts: state.contacts, addContact }}>
             {props.children}
         </ContactContext.Provider>
     );
