@@ -1,16 +1,17 @@
 import React, { useReducer } from "react";
+import axios from "axios"
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
 import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    USER_LOADED,
-    AUTH_ERROR,
-    LOGIN_SUCCESS, 
-    LOGIN_FAIL,
-    LOGOUT,
-    CLEAR_ERRORS
-  } from '../Types';
+    // USER_LOADED,
+    // AUTH_ERROR,
+    // LOGIN_SUCCESS,
+    // LOGIN_FAIL,
+    // LOGOUT,
+    // CLEAR_ERRORS,
+} from "../Types";
 
 //info - this is the inital state of our app
 const AuthState = (props) => {
@@ -18,37 +19,59 @@ const AuthState = (props) => {
         //info - This will be filled when the user is logged in so we know which user we are dealing with
         user: null,
         //info - get the authentication token from localstorage
-        token: localStorage.getItem('token'), 
+        token: localStorage.getItem("token"),
         //info - isAuthenticated tells us if we are logged in or not
         isAuthenticated: null,
         loading: true,
         //info - this will change if there are any errors
-        error: null
+        error: null,
     };
     const [state, dispatch] = useReducer(AuthReducer, initialState);
 
     //! Authentication Operations
 
     //info - Load User - Check which user is logged in
+    const loadUser = () => {};
 
     //info - Register User - Register a new user and return a token
+    const registerUser = async (formData) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        };
+
+        try {
+            const res = await axios.post("/api/users", formData, config);
+            dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+        } catch (error) {
+            dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
+        }
+    };
 
     //info - Log in User - Retrieve the token from localstorage and Log in user
+    const logInUser = () => {};
 
     //info - Logout User - Destroy the token and log out the user
+    const logOutUser = () => {};
 
     //info - Clear Errors - Clear out any errors in the state
-   
+    const clearErrors = () => {};
 
     return (
         //info - Add all functions here to be used
         <AuthContext.Provider
             value={{
                 user: state.user,
+                loadUser,
+                registerUser,
+                logInUser,
+                logOutUser,
+                clearErrors,
                 token: state.token,
-                isAuthenticated: state.isAuthenticated, 
+                isAuthenticated: state.isAuthenticated,
                 loading: state.loading,
-                error: state.error
+                error: state.error,
             }}
         >
             {props.children}

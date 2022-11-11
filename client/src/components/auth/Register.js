@@ -1,9 +1,14 @@
 import React, { useContext, useState } from "react";
 import AlertContext from "../../context/alert/AlertContext";
+import AuthContext from "../../context/auth/AuthContext";
 
 const Register = () => {
     const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+
+    const { registerUser } = authContext;
     const { setAlert } = alertContext;
+
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -21,7 +26,7 @@ const Register = () => {
             ? setAlert("Please enter all fields", "danger")
             : password !== passwordConfirmation
             ? setAlert("Passwords do not match")
-            : console.log("Register Submit");
+            : registerUser(name, email, password);
     };
 
     return (
@@ -32,15 +37,22 @@ const Register = () => {
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
                     <label htmlFor='name'>Name</label>
-                    <input type='text' name='name' value={name} onChange={onChange} required/>
+                    <input type='text' name='name' value={name} onChange={onChange} required />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='email'>Email</label>
-                    <input type='email' name='email' value={email} onChange={onChange} required/>
+                    <input type='email' name='email' value={email} onChange={onChange} required />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='password'>Password</label>
-                    <input type='password' name='password' value={password} onChange={onChange} minLength='6' required/>
+                    <input
+                        type='password'
+                        name='password'
+                        value={password}
+                        onChange={onChange}
+                        minLength='6'
+                        required
+                    />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='passwordConfirmation'>Confirm Password</label>
