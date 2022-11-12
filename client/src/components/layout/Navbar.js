@@ -13,6 +13,7 @@ const Navbar = ({ title, icon }) => {
         logOutUser();
     }
 
+    //info - this is what to render in the navbar with authorised users
     const authLinks = (
         <Fragment>
             <li>Hello {user && user.name}</li>
@@ -25,6 +26,7 @@ const Navbar = ({ title, icon }) => {
             </li>
         </Fragment>
     );
+    //info - this is what to render in the navbar with unauthorised users
     const guestLinks = (
         <Fragment>
             <li>
@@ -41,6 +43,7 @@ const Navbar = ({ title, icon }) => {
             <h1>
                 <i className={icon} /> {title}
             </h1>
+            {/*//info - check to see if authorised or not*/}
             <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
         </div>
     );
