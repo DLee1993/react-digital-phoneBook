@@ -1,6 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import AlertContext from "../../context/alert/AlertContext";
+import AuthContext from "../../context/auth/AuthContext";
 
 const Login = () => {
+    const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+
+    const { logInUser, error, clearErrors, isAuthenticated } = authContext;
+    const { setAlert } = alertContext;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
+        if (error) {
+            setAlert(error, "danger");
+            clearErrors();
+        }
+    });
+
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -12,7 +32,9 @@ const Login = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log("Login Submit");
+        email === "" || password === ""
+            ? setAlert("Please fill in all fields", "danger")
+            : logInUser({ email, password });
     };
 
     return (
@@ -23,11 +45,17 @@ const Login = () => {
             <form onSubmit={onSubmit}>
                 <div className='form-group'>
                     <label htmlFor='email'>Email</label>
-                    <input type='email' name='email' value={email} onChange={onChange} />
+                    <input type='email' name='email' value={email} onChange={onChange} required />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='password'>Password</label>
-                    <input type='password' name='password' value={password} onChange={onChange} />
+                    <input
+                        type='password'
+                        name='password'
+                        value={password}
+                        onChange={onChange}
+                        required
+                    />
                 </div>
                 <input type='submit' value='Login' className='btn btn-primary btn-block' />
             </form>

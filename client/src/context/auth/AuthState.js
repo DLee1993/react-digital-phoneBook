@@ -2,13 +2,15 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
-import setAuthToken from '../../utils/SetAuthToken'; 
+import setAuthToken from "../../utils/SetAuthToken";
 import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     CLEAR_ERRORS,
     USER_LOADED,
     AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
     // USER_LOADED,
     // AUTH_ERROR,
     // LOGIN_SUCCESS,
@@ -35,8 +37,8 @@ const AuthState = (props) => {
 
     //info - Load User - Check which user is logged in
     const loadUser = async () => {
-        if(localStorage.token){
-            setAuthToken(localStorage.token)
+        if (localStorage.token) {
+            setAuthToken(localStorage.token);
         }
         try {
             const res = await axios.get("/api/auth");
@@ -48,26 +50,28 @@ const AuthState = (props) => {
 
     //info - Register User - Register a new user and return a token
     const register = async (formData) => {
-        //info - return data to be read in json format
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
 
         try {
-            const res = await axios.post("/api/users", formData, config);
+            const res = await axios.post("/api/users", formData);
             dispatch({ type: REGISTER_SUCCESS, payload: res.data });
             setAuthToken(res.data.token);
-            loadUser(); 
+            loadUser();
         } catch (error) {
             dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
         }
     };
 
     //info - Log in User - Retrieve the token from localstorage and Log in user
-    const logInUser = () => {
-        console.log("shell code");
+    const logInUser = async (formData) => {
+
+        try {
+            const res = await axios.post("/api/auth", formData);
+            dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            setAuthToken(res.data.token);
+            loadUser();
+        } catch (error) {
+            dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
+        }
     };
 
     //info - Logout User - Destroy the token and log out the user
