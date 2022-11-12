@@ -63,11 +63,9 @@ const AuthState = (props) => {
 
     //info - Log in User - Retrieve the token from localstorage and Log in user
     const logInUser = async (formData) => {
-
         try {
             const res = await axios.post("/api/auth", formData);
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-            setAuthToken(res.data.token);
             loadUser();
         } catch (error) {
             dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
