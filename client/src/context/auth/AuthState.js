@@ -11,6 +11,7 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT,
     // USER_LOADED,
     // AUTH_ERROR,
     // LOGIN_SUCCESS,
@@ -74,7 +75,7 @@ const AuthState = (props) => {
 
     //info - Logout User - Destroy the token and log out the user
     const logOutUser = () => {
-        console.log("shell code");
+        dispatch({type: LOGOUT})
     };
 
     //info - Clear Errors - Clear out any errors in the state

@@ -9,8 +9,9 @@ const Home = () => {
     const authContext = useContext(AuthContext);
 
     useEffect(() => {
-        authContext.loadUser(); 
-    })
+        authContext.loadUser();
+        // eslint-disable-next-lint
+      }, []);
 
     return (
         <div className='grid-2'>
