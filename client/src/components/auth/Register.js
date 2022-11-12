@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AlertContext from "../../context/alert/AlertContext";
 import AuthContext from "../../context/auth/AuthContext";
 
@@ -6,8 +7,19 @@ const Register = () => {
     const alertContext = useContext(AlertContext);
     const authContext = useContext(AuthContext);
 
-    const { register } = authContext;
+    const { register, error, clearErrors, isAuthenticated } = authContext;
     const { setAlert } = alertContext;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
+        if (error) {
+            setAlert(error, "danger");
+            clearErrors();
+        }
+    });
 
     const [user, setUser] = useState({
         name: "",
@@ -26,7 +38,7 @@ const Register = () => {
             ? setAlert("Please enter all fields", "danger")
             : password !== passwordConfirmation
             ? setAlert("Passwords do not match")
-            : register({name, email, password});
+            : register({ name, email, password });
     };
 
     return (

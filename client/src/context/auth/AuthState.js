@@ -1,16 +1,19 @@
 import React, { useReducer } from "react";
-import axios from "axios"
+import axios from "axios";
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
+import setAuthToken from '../../utils/SetAuthToken'; 
 import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
+    CLEAR_ERRORS,
+    USER_LOADED,
+    AUTH_ERROR,
     // USER_LOADED,
     // AUTH_ERROR,
     // LOGIN_SUCCESS,
     // LOGIN_FAIL,
     // LOGOUT,
-    // CLEAR_ERRORS,
 } from "../Types";
 
 //info - this is the inital state of our app
@@ -31,12 +34,21 @@ const AuthState = (props) => {
     //! Authentication Operations
 
     //info - Load User - Check which user is logged in
-    const loadUser = () => {
-        console.log('shell code')
+    const loadUser = async () => {
+        if(localStorage.token){
+            setAuthToken(localStorage.token)
+        }
+        try {
+            const res = await axios.get("/api/auth");
+            dispatch({ type: USER_LOADED, payload: res.data });
+        } catch (error) {
+            dispatch({ type: AUTH_ERROR });
+        }
     };
 
     //info - Register User - Register a new user and return a token
     const register = async (formData) => {
+        //info - return data to be read in json format
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -46,6 +58,8 @@ const AuthState = (props) => {
         try {
             const res = await axios.post("/api/users", formData, config);
             dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+            setAuthToken(res.data.token);
+            loadUser(); 
         } catch (error) {
             dispatch({ type: REGISTER_FAIL, payload: error.response.data.msg });
         }
@@ -53,18 +67,16 @@ const AuthState = (props) => {
 
     //info - Log in User - Retrieve the token from localstorage and Log in user
     const logInUser = () => {
-        console.log('shell code')
+        console.log("shell code");
     };
 
     //info - Logout User - Destroy the token and log out the user
     const logOutUser = () => {
-        console.log('shell code')
+        console.log("shell code");
     };
 
     //info - Clear Errors - Clear out any errors in the state
-    const clearErrors = () => {
-        console.log('shell code')
-    };
+    const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
     return (
         //info - Add all functions here to be used
