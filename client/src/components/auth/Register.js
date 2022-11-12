@@ -6,7 +6,7 @@ const Register = () => {
     const alertContext = useContext(AlertContext);
     const authContext = useContext(AuthContext);
 
-    const { registerUser } = authContext;
+    const { register } = authContext;
     const { setAlert } = alertContext;
 
     const [user, setUser] = useState({
@@ -26,7 +26,7 @@ const Register = () => {
             ? setAlert("Please enter all fields", "danger")
             : password !== passwordConfirmation
             ? setAlert("Passwords do not match")
-            : registerUser(name, email, password);
+            : register({name, email, password});
     };
 
     return (

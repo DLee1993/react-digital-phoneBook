@@ -31,10 +31,12 @@ const AuthState = (props) => {
     //! Authentication Operations
 
     //info - Load User - Check which user is logged in
-    const loadUser = () => {};
+    const loadUser = () => {
+        console.log('shell code')
+    };
 
     //info - Register User - Register a new user and return a token
-    const registerUser = async (formData) => {
+    const register = async (formData) => {
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -50,13 +52,19 @@ const AuthState = (props) => {
     };
 
     //info - Log in User - Retrieve the token from localstorage and Log in user
-    const logInUser = () => {};
+    const logInUser = () => {
+        console.log('shell code')
+    };
 
     //info - Logout User - Destroy the token and log out the user
-    const logOutUser = () => {};
+    const logOutUser = () => {
+        console.log('shell code')
+    };
 
     //info - Clear Errors - Clear out any errors in the state
-    const clearErrors = () => {};
+    const clearErrors = () => {
+        console.log('shell code')
+    };
 
     return (
         //info - Add all functions here to be used
@@ -64,7 +72,7 @@ const AuthState = (props) => {
             value={{
                 user: state.user,
                 loadUser,
-                registerUser,
+                register,
                 logInUser,
                 logOutUser,
                 clearErrors,
