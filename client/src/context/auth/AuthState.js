@@ -12,11 +12,6 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    // USER_LOADED,
-    // AUTH_ERROR,
-    // LOGIN_SUCCESS,
-    // LOGIN_FAIL,
-    // LOGOUT,
 } from "../Types";
 
 //info - this is the inital state of our app

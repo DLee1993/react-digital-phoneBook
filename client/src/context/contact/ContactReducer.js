@@ -1,4 +1,5 @@
 import {
+    GET_CONTACTS,
     ADD_CONTACT,
     CLEAR_CURRENT,
     CLEAR_FILTER,
@@ -6,26 +7,30 @@ import {
     FILTER_CONTACTS,
     SET_CURRENT,
     UPDATE_CONTACT,
-    CONTACT_ERROR
+    CONTACT_ERROR,
 } from "../Types";
 
 //info - This is where you decide what to do with the state and payload depending on the type of action
 //info - i.e. addContact or updateContact
 const formAction = (state, action) => {
     switch (action.type) {
+        case GET_CONTACTS:
+            return { ...state, contacts: action.payload, loading: false };
         case ADD_CONTACT:
-            return { ...state, contacts: [...state.contacts, action.payload] };
+            return { ...state, contacts: [...state.contacts, action.payload], loading: false };
         case UPDATE_CONTACT:
             return {
                 ...state,
                 contacts: state.contacts.map((contact) =>
                     contact.id === action.payload.id ? action.payload : contact
                 ),
+                loading: false,
             };
         case DELETE_CONTACT:
             return {
                 ...state,
                 contacts: state.contacts.filter((contact) => contact.id !== action.payload),
+                loading: false,
             };
         case SET_CURRENT:
             return { ...state, current: action.payload };
@@ -44,8 +49,8 @@ const formAction = (state, action) => {
             };
         case CLEAR_FILTER:
             return { ...state, filtered: null };
-        case CONTACT_ERROR: 
-        return {...state, error: action.payload}
+        case CONTACT_ERROR:
+            return { ...state, error: action.payload };
         default:
             return state;
     }
