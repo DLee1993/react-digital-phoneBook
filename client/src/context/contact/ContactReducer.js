@@ -5,7 +5,8 @@ import {
     DELETE_CONTACT,
     FILTER_CONTACTS,
     SET_CURRENT,
-    UPDATE_CONTACT
+    UPDATE_CONTACT,
+    CONTACT_ERROR
 } from "../Types";
 
 //info - This is where you decide what to do with the state and payload depending on the type of action
@@ -43,6 +44,8 @@ const formAction = (state, action) => {
             };
         case CLEAR_FILTER:
             return { ...state, filtered: null };
+        case CONTACT_ERROR: 
+        return {...state, error: action.payload}
         default:
             return state;
     }
